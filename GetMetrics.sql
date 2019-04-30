@@ -62,7 +62,7 @@ EXEC Maintenance.GetMetrics 30;
 
 	--Get Values from last sample
 	SELECT TOP 1 @TempTablesForDestruction = cntr_value FROM @RatioStatsY WHERE counter_name = 'Temp Tables For Destruction' AND object_name LIKE '%General Statistics%';                                         
-	SELECT TOP 1 @TempTableCreationRatePerSecond = cntr_value FROM @RatioStatsY WHERE counter_name = 'Temp Tables Creation Rate' AND object_name LIKE '%General Statistics%';                                         
+	SELECT TOP 1 @ActiveTempTables = cntr_value FROM @RatioStatsY WHERE counter_name = 'Active Temp Tables' AND object_name LIKE '%General Statistics%';                                         
 	
 	DECLARE @Now DATETIME = GETDATE();
 
