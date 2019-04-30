@@ -18,11 +18,11 @@ BEGIN
 	END
 
 	DECLARE @Hours SMALLINT = @Duration / 3600;
-	SELECT @Duration = @Duration - (3600 * @Hours);
+	SELECT @Duration = @Duration % 3600;
 	DECLARE @Minutes TINYINT = @Duration / 60;
-	SELECT @Duration = @Duration - (60 * @Minutes);
+	SELECT @Duration = @Duration % 60;
 	DECLARE @Seconds TINYINT = @Duration;
-
+    
 	DECLARE @WaitFor VARCHAR(50) = 'WAITFOR DELAY ''{H}:{M}:{S}'' ';
 
 	SELECT @WaitFor = REPLACE(@WaitFor, '{H}', cast(ISNULL(@Hours, '00') AS VARCHAR(4)));
