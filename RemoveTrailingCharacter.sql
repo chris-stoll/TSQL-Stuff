@@ -1,4 +1,4 @@
-CREATE FUNCTION dbo.RemoveTrailingCharacter(@input VARCHAR(MAX), @character CHAR(1))
+CREATE OR ALTER FUNCTION dbo.RemoveTrailingCharacter(@input VARCHAR(MAX), @character CHAR(1))
 RETURNS VARCHAR(MAX)
 AS
 BEGIN
