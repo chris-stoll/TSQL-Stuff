@@ -25,7 +25,8 @@ BEGIN
 
 	INSERT INTO @SplitString(Word)
 	SELECT ss.value
-	FROM STRING_SPLIT(@string, @Delimiter) ss;
+	FROM STRING_SPLIT(@string, @Delimiter) ss
+	WHERE LEN(TRIM(ss.value)) > 0;
 
 
 	DECLARE @Pos INT = 1;
