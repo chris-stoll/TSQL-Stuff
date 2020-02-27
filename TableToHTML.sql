@@ -17,7 +17,7 @@ BEGIN
 	IF OBJECT_ID('tempdb..#Columns') IS NOT NULL
 		DROP TABLE #Columns;
 	
-	DECLARE @columnQuery VARCHAR(MAX) = 'select name, Column_id from {db}sys.columns where object_id =object_id(''{table}'')';
+	DECLARE @columnQuery VARCHAR(MAX) = 'INSERT INTO #Columns (ColumnName, ColumnOrder) select name, Column_id from {db}sys.columns where object_id =object_id(''{table}'')';
 	IF PATINDEX('%#%', @TableName) > 0
 	BEGIN
 		SELECT @columnQuery	= REPLACE(@columnQuery, '{table}', 'tempdb..' + @TableName);
@@ -31,8 +31,7 @@ BEGIN
 
 	CREATE TABLE #Columns (ColumnName VARCHAR(128), ColumnOrder INT NOT NULL PRIMARY KEY);
 	--PRINT @columnQuery
-	
-	INSERT INTO #Columns (ColumnName, ColumnOrder)
+
 	EXEC(@columnQuery);
 
 	DECLARE @OrderedByExternalOrderID BIT = 0
