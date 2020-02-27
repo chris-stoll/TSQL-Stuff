@@ -1,4 +1,4 @@
-CREATE OR ALTER PROCEDURE Maintenance.WaitForSeconds
+CREATE OR ALTER PROCEDURE General.WaitForSeconds
 	@Duration SMALLINT = 10
 AS
 /*
