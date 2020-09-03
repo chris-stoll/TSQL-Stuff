@@ -1,12 +1,12 @@
-CREATE OR ALTER PROCEDURE General.TableToHTML
+CREATE OR ALTER PROCEDURE dbo.TableToHTML
  @TableName VARCHAR(500)
 ,@Body VARCHAR(MAX) OUTPUT
 AS
 /*
 
 DECLARE @BodyOut varchar(max);
-EXEC General.TableToHTML @TableName =
-	 'Location.LocationType'
+EXEC dbo.TableToHTML @TableName =
+	 'sys.tables'
 	,@body = @bodyOut output;
 
 SELECT @BodyOut	;
@@ -79,7 +79,7 @@ BEGIN
 
 	--PRINT 'ColumnList: ' + @columnList;
 
-	DROP TABLE #Columns;
+	DROP TABLE IF EXISTS #Columns;
 
 	DECLARE @sqlCommand NVARCHAR(MAX)= '
 set @body = cast( (
@@ -122,14 +122,5 @@ set @body = ''<table cellpadding="2" cellspacing="2" border="1">''
 	EXECUTE sp_executesql @sqlCommand, N'@body varchar(max) OUTPUT', @Body = @Body	OUTPUT;
 
 
-	
 END;
-
-
-
-
-
-
-
 GO
-

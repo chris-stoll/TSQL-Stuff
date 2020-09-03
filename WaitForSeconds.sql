@@ -1,13 +1,13 @@
-CREATE OR ALTER PROCEDURE General.WaitForSeconds
+CREATE OR ALTER PROCEDURE dbo.WaitForSeconds
 	@Duration SMALLINT = 10
 AS
 /*
 
 --Hard 10 seconds
-EXEC Maintenance.WaitForSeconds @Duration = 10;
+EXEC dbo.WaitForSeconds @Duration = 10;
 
 --Random between 0 and 10 seconds
-EXEC Maintenance.WaitForSeconds @Duration = -10;
+EXEC dbo.WaitForSeconds @Duration = -10;
 
 */
 BEGIN

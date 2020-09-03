@@ -1,4 +1,4 @@
-CREATE OR ALTER PROCEDURE [Maintenance].[GetMetrics]
+CREATE OR ALTER PROCEDURE dbo.GetMetrics
 	@SampleDuration INT = 10
 AS
 BEGIN
