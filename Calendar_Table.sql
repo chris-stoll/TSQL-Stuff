@@ -1,8 +1,6 @@
 CREATE OR ALTER PROCEDURE General.Calendar_Populate
 AS
 BEGIN
-
-	SET NOCOUNT ON;
 	/*
 	DROP TABLE IF EXISTS General.Calendar;
 
@@ -53,6 +51,17 @@ BEGIN
 
 	*/
 
+
+/*
+TODO:
+1. Add Month_ShortName
+2. Add DayOfWeek_ShortName
+
+
+*/
+
+
+	SET NOCOUNT ON;
 	SET DATEFIRST 7, DATEFORMAT MDY, LANGUAGE US_ENGLISH;
 
 	DECLARE @StartDate DATE = DATEADD(YEAR, -50, GETDATE());
@@ -88,6 +97,7 @@ BEGIN
 	DECLARE @CurrentDate DATE = @StartDate;
 
 	DECLARE @StopWatch DATETIME2 = SYSDATETIME();
+	BEGIN TRY
 	BEGIN TRAN;
 		DELETE FROM General.Calendar WITH(TABLOCKX) WHERE Calendar_Date BETWEEN @StartDate AND @EndDate;
 
@@ -104,7 +114,7 @@ BEGIN
 			SELECT @Calendar_WeekOfYear = DATEPART(WEEK, @CurrentDate);
 
 			SELECT @Calendar_WeekOfMonth = DATEDIFF(WEEK, DATEADD(MONTH, DATEDIFF(MONTH, 0, @CurrentDate), 0), @CurrentDate) + 1
-			--SELECT @Calendar_WeekOfMonth
+		
 			SELECT @Calendar_DayOfYear = DATEPART(DAYOFYEAR, @CurrentDate);
 
 			SELECT @Calendar_DayOfMonth = DATEPART(DAY, @CurrentDate);
@@ -189,6 +199,12 @@ BEGIN
 			SELECT @CurrentDate = DATEADD(DAY, 1, @CurrentDate);
 		END
 	COMMIT TRAN;
+	END TRY
+	BEGIN CATCH
+		IF @@TRANCOUNT > 0
+			ROLLBACK TRAN;
+		THROW;
+	END CATCH
 	PRINT 'Elapsed Time to populate: ' + CAST(DATEDIFF(MILLISECOND, @StopWatch, SYSDATETIME()) AS VARCHAR(100)) + 'ms';
 END
 GO
