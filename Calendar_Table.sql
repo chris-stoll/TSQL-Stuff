@@ -16,6 +16,7 @@ BEGIN
 		,Calendar_Month TINYINT NOT NULL
 		,Calendar_DayOfYear SMALLINT NOT NULL
 		,Calendar_WeekOfYear TINYINT NOT NULL
+		,Calendar_WeekOfMonth TINYINT NOT NULL
 		,Calendar_DayOfMonth TINYINT NOT NULL
 		,Calendar_DayOfWeek TINYINT NOT NULL
 		,Month_Name VARCHAR(10) NOT NULL
@@ -41,6 +42,7 @@ BEGIN
 				AND (Calendar_DayOfMonth BETWEEN 1 AND 31)
 				AND (Calendar_DayOfWeek BETWEEN 1 AND 7)
 				AND (Days_In_Month BETWEEN 28 AND 31)
+				AND (Calendar_WeekOfMonth BETWEEN 1 and 6)
 			)
 
 	EXEC General.Calendar_Populate
@@ -54,7 +56,7 @@ BEGIN
 	SET DATEFIRST 7, DATEFORMAT MDY, LANGUAGE US_ENGLISH;
 
 	DECLARE @StartDate DATE = DATEADD(YEAR, -50, GETDATE());
-	DECLARE @EndDate DATE = DATEADD(YEAR, 200, GETDATE());
+	DECLARE @EndDate DATE = DATEADD(YEAR, 50, GETDATE());
 
 	DECLARE @YYYYMMDD INT;
 
@@ -62,7 +64,7 @@ BEGIN
 	DECLARE @Calendar_Quarter TINYINT;
 	DECLARE @Calendar_Month TINYINT;
 	DECLARE @Calendar_WeekOfYear TINYINT;
-
+	DECLARE @Calendar_WeekOfMonth TINYINT;
 	DECLARE @Calendar_DayOfMonth TINYINT;
 	DECLARE @Calendar_DayOfWeek TINYINT;
 	DECLARE @Calendar_DayOfYear SMALLINT;
@@ -101,6 +103,8 @@ BEGIN
 
 			SELECT @Calendar_WeekOfYear = DATEPART(WEEK, @CurrentDate);
 
+			SELECT @Calendar_WeekOfMonth = DATEDIFF(WEEK, DATEADD(MONTH, DATEDIFF(MONTH, 0, @CurrentDate), 0), @CurrentDate) + 1
+			--SELECT @Calendar_WeekOfMonth
 			SELECT @Calendar_DayOfYear = DATEPART(DAYOFYEAR, @CurrentDate);
 
 			SELECT @Calendar_DayOfMonth = DATEPART(DAY, @CurrentDate);
@@ -146,6 +150,7 @@ BEGIN
 				Calendar_Year,
 				Calendar_Month,
 				Calendar_WeekOfYear,
+				Calendar_WeekOfMonth,
 				Calendar_DayOfMonth,
 				Calendar_DayOfWeek,
 				Month_Name,
@@ -166,6 +171,7 @@ BEGIN
 				@Calendar_Year,         -- Calendar_Year - smallint
 				@Calendar_Month,         -- Calendar_Month - tinyint
 				@Calendar_WeekOfYear,         -- Calendar_WeekOfYear - tinyint
+				@Calendar_WeekOfMonth,		--Calendar_WeekOfMonth - tinyint
 				@Calendar_DayOfMonth,         -- Calendar_DayOfMonth - tinyint
 				@Calendar_DayOfWeek,         -- Calendar_DayOfWeek - tinyint
 				@Month_Name,        -- Month_Name - varchar(10)
