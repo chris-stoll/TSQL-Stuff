@@ -1,4 +1,4 @@
-CREATE OR ALTER FUNCTION dbo.MutliReplace
+CREATE OR ALTER FUNCTION dbo.MultiReplace
 (
     @InputString NVARCHAR(MAX)
     ,@TargetString NVARCHAR(MAX) 
@@ -7,7 +7,7 @@ CREATE OR ALTER FUNCTION dbo.MutliReplace
 RETURNS NVARCHAR(MAX)
 /*
 
-SELECT dbo.MutliReplace('TEST!@#$%^&*()TEST', '!@#$%^&*()', ' ')
+SELECT dbo.MultiReplace('TEST!@#$%^&*()TEST', '!@#$%^&*()', ' ')
 
 */
 AS
