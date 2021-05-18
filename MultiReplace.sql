@@ -2,7 +2,7 @@ CREATE OR ALTER FUNCTION dbo.MutliReplace
 (
     @InputString NVARCHAR(MAX)
     ,@TargetString NVARCHAR(MAX) 
-    ,@ReplacementChar CHAR(1) 
+    ,@ReplacementChar NCHAR(1) 
 )
 RETURNS NVARCHAR(MAX)
 /*
