@@ -13,7 +13,6 @@ CREATE OR ALTER FUNCTION dbo.TranslateCharacters
 /*
 --Testing
 
-
 SELECT dbo.TranslateCharacters('123456[7890', '[',' ');
 SELECT dbo.TranslateCharacters('1234*56[7890', '[*','||');
 
@@ -24,7 +23,7 @@ AS
 BEGIN
     
 	IF DATALENGTH(@Characters) <> DATALENGTH(@Translations)
-		RETURN CAST('@character @Translation length mismatch' AS INT);
+		RETURN CAST('@Characters @Translations length mismatch' AS INT);
 
 	DECLARE @pos INT = 1;
 
