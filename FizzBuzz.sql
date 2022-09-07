@@ -8,5 +8,5 @@
 		FROM num
 		WHERE n < 100
 	)
-SELECT 'n' = ISNULL(NULLIF(CASE WHEN n%3=0 THEN 'Fizz' ELSE '' END + CASE WHEN n%5=0 THEN 'Buzz' ELSE '' END,''),n)
+SELECT 'n' = ISNULL(NULLIF(IIF(n%3=0,'Fizz', '') + IIF(n%5=0,'Buzz',''),''),n)
 FROM num;
